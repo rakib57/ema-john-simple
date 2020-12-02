@@ -9,8 +9,8 @@ import {
   Link
 } from "react-router-dom";
 import Review from './componets/Review/Review';
-import Inventory from './Inventory/Inventory';
-import Notfound from './Notfound/Notfound';
+import Inventory from './componets/Inventory/Inventory';
+import Notfound from './componets/Notfound/Notfound';
 import ProductDetails from './componets/ProductDetails/ProductDetails';
 import Login from './componets/Login/Login';
 import Shipment from './componets/Shipment/Shipment';
@@ -23,9 +23,7 @@ export const UserContext = createContext();
 function App(props) {
   const [loggedInUser, setLOggedInUser] = useState({});
   return (
-    <UserContext.Provider value={[loggedInUser, setLOggedInUser]}>
-      <h2>email: {loggedInUser.email}</h2>
-      
+    <UserContext.Provider value={[loggedInUser, setLOggedInUser]}>   
       <Router>
       <Header></Header>
         <Switch>

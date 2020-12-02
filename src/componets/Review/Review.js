@@ -2,8 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getDatabaseCart, removeFromDatabaseCart, processOrder } from '../../utilities/databaseManager';
-import fakeData from '../../fakeData';
-import ReviewItems from '../../ReviewItems/ReviewItems';
+import ReviewItems from '../ReviewItems/ReviewItems';
 import Cart from '../Cart/Cart'
 import happyImage from '../../images/giphy.gif'
 import { useHistory } from 'react-router-dom';
@@ -24,16 +23,19 @@ const Review = () => {
     }
 
     useEffect (() => {
-        // cart
         const saveCart = getDatabaseCart();
         const productKeys = Object.keys(saveCart);
 
-        const cartProducts = productKeys.map(key => {
-            const product = fakeData.find(pd => pd.key === key);
-            product.quantity = saveCart[key];
-            return product
-        }) 
-        setCart (cartProducts);
+       fetch('http://localhost:5000/productsByKeys',{
+           method:'POST',
+           headers:{
+            'Content-type':'application/json'
+        },
+        body:JSON.stringify(productKeys)
+       })
+       .then(res =>res.json())
+       .then(data => setCart(data))
+
     }, []);
      let thankyou;
          if(orderPlace){
